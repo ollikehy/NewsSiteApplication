@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Top News</title>
+        <meta charset="UTF-8"></meta>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+    </head>
+    <body>
+        <h2>Top stories</h2>
+
+        <ul>
+            <li th:each="story : ${news}">
+                <h3 th:text="${story.heading}">title</h3><br/>
+                <!--                image goes here-->
+                <h4 th:text="${story.lead}">lead</h4><br/>
+                <span th:text="${story.story}">story</span><br/>
+            </li>
+        </ul>
+
+        <div>
+            Enter information and submit:<br/>
+            <form th:action="@{/news}" method="POST">
+                Title: <input type="text" name="title" id="title"/><br/>
+                Lead: <input type="text" name="lead" id="lead"/><br/>
+                Story: <input type="text" name="story" id ="story"/><br/>
+                <input type="submit"/>            
+            </form>
+        </div>
+    </body>
+</html>
