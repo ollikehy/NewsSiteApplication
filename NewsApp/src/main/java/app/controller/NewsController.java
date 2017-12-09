@@ -7,6 +7,7 @@ import app.repository.ImageRepository;
 import app.utility.StoryUtility;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -43,12 +44,16 @@ public class NewsController {
     @Transactional
     @PostMapping("/news")
     public String create(@RequestParam String heading, @RequestParam String lead, @RequestParam String story,
-            @RequestParam("file") MultipartFile file) throws IOException {
+            @RequestParam("file") MultipartFile file, Model model) throws IOException {
 
+        List<String> errors = storyUtility.validateInputs(heading, lead, story, file);
+        if (errors.size() > 0) {
+            model.addAttribute("errors", errors);
+            return "errors";
+        }
         LocalDateTime date = LocalDateTime.now();
-
         Long newStoryId = storyRepository.save(new Story(heading, lead, story, date)).getId();
-        
+
         storyUtility.setImage(file, newStoryId);
 
         return "redirect:/news";
@@ -57,23 +62,23 @@ public class NewsController {
     @GetMapping("/news/{id}")
     public String getStory(Model model, @PathVariable Long id) {
         Story story = storyRepository.getOne(id);
-        
+
         model.addAttribute("newsStory", story);
         model.addAttribute("imageId", story.getImage().getId());
-        
+
         return "story";
     }
-    
-    @GetMapping(path = "/news/{id}/content", produces="image/png")
+
+    @GetMapping(path = "/news/{id}/content", produces = "image/png")
     @ResponseBody
     @Transactional
     public ResponseEntity<byte[]> getImage(@PathVariable Long id) {
         Image i = imageRepository.getOne(id);
-        
+
         final HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.parseMediaType(i.getContentType()));
         headers.setContentLength(i.getContentLength());
-        
+
         return new ResponseEntity<>(i.getContent(), headers, HttpStatus.CREATED);
     }
 
