@@ -8,8 +8,8 @@
     </head>
     <body>
         <h3 th:text="${newsStory.heading}">heading</h3><br/>
-        <img src="${newsStory.image}"/><br/>
-        <h4 th:text="${newsStory.lead}">lead</h4><br/>
+        <img th:src="${/news/{id}/content(id=${imageId})}"/><br/>
+        <h4 th:text="${newsStory.lead}">lead</h4>
         <span th:text="${newsStory.story}">story</span><br/>
 
         <a href="/news">Back to news</a>

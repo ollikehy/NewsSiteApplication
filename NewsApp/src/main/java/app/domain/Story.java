@@ -4,15 +4,17 @@ package app.domain;
 import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.jpa.domain.AbstractPersistable;
 
-@Data
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 public class Story extends AbstractPersistable<Long>{
 
     public String heading;
@@ -21,7 +23,7 @@ public class Story extends AbstractPersistable<Long>{
     public LocalDateTime date;
     
     @OneToOne
-    @JoinColumn
+    @Lob
     public Image image;
     
     public Story(String heading, String lead, String story, LocalDateTime date) {
@@ -33,5 +35,9 @@ public class Story extends AbstractPersistable<Long>{
 
     public void setImage(Image image) {
         this.image = image;
+    }
+    
+    public Image getImage() {
+        return this.image;
     }
 }
