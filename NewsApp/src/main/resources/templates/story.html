@@ -2,15 +2,15 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title th:text="${story.heading}">heading</title>
+        <title th:text="${newsStory.heading}">heading</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
     </head>
     <body>
-        <h3 th:text="${story.heading}">heading</h3><br/>
-        <img src="${story.image}"/><br/>
-        <h4 th:text="${story.lead}">lead</h4><br/>
-        <span th:text="${story.story}">story</span><br/>
+        <h3 th:text="${newsStory.heading}">heading</h3><br/>
+        <img src="${newsStory.image}"/><br/>
+        <h4 th:text="${newsStory.lead}">lead</h4><br/>
+        <span th:text="${newsStory.story}">story</span><br/>
         
         <a href="/news">Back to news</a>
     </body>

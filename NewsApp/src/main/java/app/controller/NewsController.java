@@ -49,7 +49,7 @@ public class NewsController {
 
     @GetMapping("/news/{id}")
     public String getStory(Model model, @PathVariable Long id) {
-        model.addAttribute("news", storyRepository.getOne(id));
+        model.addAttribute("newsStory", storyRepository.getOne(id));
         return "story";
     }
 
