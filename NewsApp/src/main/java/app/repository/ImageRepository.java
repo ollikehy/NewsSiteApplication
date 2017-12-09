@@ -1,9 +1,8 @@
-
 package app.repository;
 
-import app.domain.Story;
+import app.domain.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface StoryRepository extends JpaRepository<Story, Long>{
+public interface ImageRepository extends JpaRepository<Image, Long> {
     
 }

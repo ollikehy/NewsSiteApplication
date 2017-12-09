@@ -12,19 +12,20 @@
         <ul>
             <li th:each="story : ${news}">
                 <h3 th:text="${story.heading}">title</h3><br/>
-                <!--                image goes here-->
+                <img th:src="${story.image}"/><br/>
                 <h4 th:text="${story.lead}">lead</h4><br/>
-                <span th:text="${story.story}">story</span><br/>
+                <a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">story</a>
             </li>
         </ul>
 
         <div>
             Enter information and submit:<br/>
-            <form th:action="@{/news}" method="POST">
-                Title: <input type="text" name="title" id="title"/><br/>
+            <form th:action="@{/news}" method="POST" enctype="multipart/form-data">
+                Heading: <input type="text" name="heading" id="heading"/><br/>
                 Lead: <input type="text" name="lead" id="lead"/><br/>
                 Story: <input type="text" name="story" id ="story"/><br/>
-                <input type="submit"/>            
+                Image: <input type="file" name="file" id="file"/><br/>
+                <input type="submit" value="Add a news story"/>            
             </form>
         </div>
     </body>
