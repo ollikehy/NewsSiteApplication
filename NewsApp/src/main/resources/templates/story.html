@@ -5,12 +5,18 @@
         <title th:text="${newsStory.heading}">heading</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+        <style>
+            ul {
+                list-style-type: none   
+            }
+        </style>
     </head>
     <body>
-        <h3 th:text="${newsStory.heading}">heading</h3><br/>
-        <img th:src="${/news/{id}/content(id=${imageId})}"/><br/>
-        <h4 th:text="${newsStory.lead}">lead</h4>
-        <span th:text="${newsStory.story}">story</span><br/>
+        <h1 th:text="${newsStory.heading}">heading</h1><br/>
+        <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
+        <h3 th:text="${newsStory.lead}">lead</h3>
+        <span th:text="${newsStory.text}">story</span><br/>
 
         <a href="/news">Back to news</a>
     </body>

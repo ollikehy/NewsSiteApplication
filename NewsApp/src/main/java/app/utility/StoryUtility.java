@@ -23,31 +23,31 @@ public class StoryUtility {
     private ImageRepository imageRepository;
 
     private List<String> errors;
-    
+
     @Transactional
     public void setImage(MultipartFile file, Long id) throws IOException {
         Image image = new Image(LocalDateTime.now());
         image.setStory(storyRepository.getOne(id));
-        
+
         try {
-        image.setContent(file.getBytes());
+            image.setContent(file.getBytes());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
         image.setContentLength(file.getSize());
         image.setContentType(file.getContentType());
         image.setName(file.getName());
-        
+
         Story story = storyRepository.getOne(id);
-        
+
         imageRepository.save(image).setStory(story);
         storyRepository.getOne(id).setImage(image);
     }
 
-    public List<String> validateInputs(String heading, String lead, String story, MultipartFile file) throws IOException{
+    public List<String> validateInputs(String heading, String lead, String story, MultipartFile file) throws IOException {
         errors = new ArrayList();
-        validateHeading(heading);        
+        validateHeading(heading);
         validateLead(lead);
         validateStory(story);
         validateImage(file);
@@ -78,13 +78,13 @@ public class StoryUtility {
         }
     }
 
-    private void validateImage(MultipartFile file) throws IOException{
-        if (!file.getContentType().contains("png")) {
+    private void validateImage(MultipartFile file) throws IOException {
+        if (file.isEmpty()) {
+            errors.add("Add an image");
+        } else if (!file.getContentType().contains("png")) {
             errors.add("Image must be of type png");
         } else if (file.getBytes().length > 1048576) {
             errors.add("Image is too large");
-        } else if (file.isEmpty()) {
-            errors.add("Add an image");
         }
     }
 }

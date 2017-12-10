@@ -7,6 +7,7 @@ import app.repository.ImageRepository;
 import app.utility.StoryUtility;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,12 @@ public class NewsController {
 
     @GetMapping("/news")
     public String getNews(Model model) {
+        List<Long> imageIds = new ArrayList();
+        for (Story story : storyRepository.findAll()) {
+            imageIds.add(story.getImage().getId());
+        }
+        
+        model.addAttribute("imageIds", imageIds);
         model.addAttribute("news", storyRepository.findAll());
         return "news";
     }

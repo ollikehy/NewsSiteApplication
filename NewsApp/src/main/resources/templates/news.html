@@ -5,19 +5,29 @@
         <title>Top News</title>
         <meta charset="UTF-8"></meta>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+        <style>
+            ul {
+                list-style-type: none   
+            }
+        </style>
     </head>
     <body>
         <h2>Top stories</h2>
 
         <ul>
             <li th:each="story : ${news}">
-                <h3 th:text="${story.heading}">title</h3><br/>
-                <img th:src="${story.image}"/><br/>
-                <h4 th:text="${story.lead}">lead</h4><br/>
+                <h1 th:text="${story.heading}">title</h1><br/>
+                <h3 th:text="${story.lead}">lead</h3><br/>
                 <a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">story</a>
             </li>
         </ul>
 
+        <ul>
+            <li th:each="imageId : ${imageIds}">
+                <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
+            </li>
+        </ul>
         <div>
             Enter information and submit:<br/>
             <form th:action="@{/news}" method="POST" enctype="multipart/form-data">
