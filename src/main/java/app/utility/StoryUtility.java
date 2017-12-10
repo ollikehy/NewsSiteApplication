@@ -10,6 +10,7 @@ import app.repository.ImageRepository;
 import app.repository.StoryRepository;
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,5 +116,18 @@ public class StoryUtility {
         edittedStory.getCategoryList().clear();
         edittedStory.getAuthorList().clear();
         storyRepository.save(edittedStory);
+    }
+
+    public List<Story> getNewsByCategory(String categoryName) {
+        List<Story> stories = new ArrayList();
+        for (Story story : storyRepository.findAll()) {
+            for (Category category : story.getCategoryList()) {
+                if (category.getName().equals(categoryName)) {
+                    stories.add(story);
+                }
+            }
+        }
+        
+        return stories;
     }
 }

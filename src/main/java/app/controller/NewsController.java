@@ -167,4 +167,21 @@ public class NewsController {
         model.addAttribute("news", storyRepository.findAll(pageable));
         return "trending";
     }
+    
+    @GetMapping("/news/categories")
+    public String getCategories(Model model) {
+        if (categoryRepository.findAll().size() < 1) {
+            return "redirect:/news";
+        }
+        model.addAttribute("categories", categoryRepository.findAll());
+        return "categories";
+    }
+    
+    @GetMapping("/news/categories/{id}")
+    public String getCategory(Model model, @PathVariable Long id) {
+        String categoryName = categoryRepository.getOne(id).getName();
+        model.addAttribute("category", categoryName);
+        model.addAttribute("news", storyUtility.getNewsByCategory(categoryName));
+        return "category";
+    }
 }
