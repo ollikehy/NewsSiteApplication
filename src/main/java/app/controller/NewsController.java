@@ -5,6 +5,7 @@ import app.repository.StoryRepository;
 import app.domain.Story;
 import app.repository.ImageRepository;
 import app.utility.StoryUtility;
+import app.utility.ValidationUtility;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -35,6 +36,9 @@ public class NewsController {
 
     @Autowired
     private StoryUtility storyUtility;
+    
+    @Autowired
+    private ValidationUtility validationUtility;
 
     @GetMapping("/news")
     public String getNews(Model model) {
@@ -51,9 +55,9 @@ public class NewsController {
     @Transactional
     @PostMapping("/news")
     public String create(@RequestParam String heading, @RequestParam String lead, @RequestParam String story,
-            @RequestParam("file") MultipartFile file, Model model) throws IOException {
+            @RequestParam("file") MultipartFile file, @RequestParam String authors, Model model) throws IOException {
 
-        List<String> errors = storyUtility.validateInputs(heading, lead, story, file);
+        List<String> errors = validationUtility.validateInputs(heading, lead, story, file, authors);
         if (errors.size() > 0) {
             model.addAttribute("errors", errors);
             return "errors";
@@ -62,6 +66,7 @@ public class NewsController {
         Long newStoryId = storyRepository.save(new Story(heading, lead, story, date)).getId();
 
         storyUtility.setImage(file, newStoryId);
+        storyUtility.setAuthors(authors, newStoryId);
 
         return "redirect:/news";
     }
@@ -72,6 +77,7 @@ public class NewsController {
 
         model.addAttribute("newsStory", story);
         model.addAttribute("imageId", story.getImage().getId());
+        model.addAttribute("authors", story.getAuthorList());
 
         return "story";
     }

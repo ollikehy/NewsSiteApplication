@@ -16,6 +16,12 @@
         <h1 th:text="${newsStory.heading}">heading</h1><br/>
         <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
         <p th:text="${newsStory.localTime}">release time</p>
+        <span>Authors:</span>
+        <ul>
+            <li th:each="author :${authors}">
+                <span th:text="author">author</span>
+            </li>
+        </ul>
         <h3 th:text="${newsStory.lead}">lead</h3>
         <span th:text="${newsStory.text}">story</span><br/>
 

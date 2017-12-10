@@ -1,8 +1,11 @@
 package app.domain;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -30,11 +33,15 @@ public class Story extends AbstractPersistable<Long> {
     private String text;
     private LocalDateTime localTime;
 
+    @ManyToMany
+    private List<Author> authorList;
+    
     public Story(String heading, String lead, String text, LocalDateTime localTime) {
         this.heading = heading;
         this.lead = lead;
         this.text = text;
         this.localTime = localTime;
+        this.authorList = new ArrayList();
     }
 
     public String getHeading() {
@@ -76,5 +83,13 @@ public class Story extends AbstractPersistable<Long> {
 
     public void setReleaseTime(LocalDateTime releaseTime) {
         this.localTime = releaseTime;
+    }
+    
+    public List<Author> getAuthorList() {
+        return this.authorList;
+    }
+    
+    public void setAuthorList(List<Author> authors) {
+        this.authorList = authors;
     }
 }

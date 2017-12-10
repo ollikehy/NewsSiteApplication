@@ -13,22 +13,22 @@
         </style>
     </head>
     <body>
-        <h2>Top stories</h2>
+        <h1>Top stories:</h1>
 
         <ul>
             <li th:each="story : ${news}">
-                <h1 th:text="${story.heading}">title</h1>
+                <h2 th:text="${story.heading}">title</h2>
                 <h3 th:text="${story.lead}">lead</h3>
                 <img th:src="@{/news/{id}/content(id=${story.kuvaId})}"/><br/>
                 <a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">story</a>
             </li>
         </ul>
 
-<!--        <ul>
-            <li th:each="imageId : ${imageIds}">
-                <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
-            </li>
-        </ul>-->
+        <!--        <ul>
+                    <li th:each="imageId : ${imageIds}">
+                        <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
+                    </li>
+                </ul>-->
         <div>
             <h3>Add a news story</h3>
             Enter information and submit:<br/>
@@ -36,6 +36,7 @@
                 Heading: <input type="text" name="heading" id="heading"/><br/>
                 Lead: <input type="text" name="lead" id="lead"/><br/>
                 Story: <input type="text" name="story" id ="story"/><br/>
+                Authors: <input type="text" name="authors" id="authors"/><br/>
                 Image: <input type="file" name="file" id="file"/><br/>
                 <input type="submit" value="Add a news story"/>            
             </form>

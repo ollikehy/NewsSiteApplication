@@ -1,7 +1,9 @@
 package app.utility;
 
+import app.domain.Author;
 import app.domain.Image;
 import app.domain.Story;
+import app.repository.AuthorRepository;
 import app.repository.ImageRepository;
 import app.repository.StoryRepository;
 import java.io.IOException;
@@ -21,8 +23,8 @@ public class StoryUtility {
     private StoryRepository storyRepository;
     @Autowired
     private ImageRepository imageRepository;
-
-    private List<String> errors;
+    @Autowired
+    private AuthorRepository authorRepository;
 
     @Transactional
     public void setImage(MultipartFile file, Long id) throws IOException {
@@ -45,46 +47,29 @@ public class StoryUtility {
         storyRepository.getOne(id).setImage(image);
     }
 
-    public List<String> validateInputs(String heading, String lead, String story, MultipartFile file) throws IOException {
-        errors = new ArrayList();
-        validateHeading(heading);
-        validateLead(lead);
-        validateStory(story);
-        validateImage(file);
-        return errors;
-    }
+    @Transactional
+    public void setAuthors(String authors, Long newStoryId) {
+        Story story = storyRepository.getOne(newStoryId);
+        String[] authorArray = authors.split(", ");
 
-    private void validateHeading(String heading) {
-        if (heading.isEmpty()) {
-            errors.add("No heading");
-        } else if (heading.length() > 1000) {
-            errors.add("Heading is too long, maximum length 1000 symbols");
-        }
-    }
+        for (String author : authorArray) {
+            Author exists = authorRepository.findByName(author);
+            if (exists != null) {
+                List<Story> storyList = exists.getStoryList();
+                storyList.add(story);
+                story.getAuthorList().add(exists);
+                storyRepository.save(story);
+                authorRepository.save(exists);
+            } else {
+                Author newAuthor = new Author(author);
+                List<Story> storyList = newAuthor.getStoryList();
+                storyList.add(story);
+                newAuthor.setStoryList(storyList);
+                authorRepository.save(newAuthor);
 
-    private void validateLead(String lead) {
-        if (lead.isEmpty()) {
-            errors.add("No lead");
-        } else if (lead.length() > 5000) {
-            errors.add("Lead is too long, maximum length 1000 symbols");
-        }
-    }
-
-    private void validateStory(String story) {
-        if (story.isEmpty()) {
-            errors.add("No story");
-        } else if (story.length() > 10000) {
-            errors.add("Story is too long, maximum length 10000 symbols");
-        }
-    }
-
-    private void validateImage(MultipartFile file) throws IOException {
-        if (file.isEmpty()) {
-            errors.add("Add an image");
-        } else if (!file.getContentType().contains("png")) {
-            errors.add("Image must be of type png");
-        } else if (file.getBytes().length > 1048576) {
-            errors.add("Image is too large");
+                story.getAuthorList().add(newAuthor);
+                storyRepository.save(story);
+            }
         }
     }
 }
