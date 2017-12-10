@@ -36,11 +36,14 @@ public class Story extends AbstractPersistable<Long> {
     @ManyToMany
     private List<Author> authorList;
     
+    private int visits;
+    
     public Story(String heading, String lead, String text, LocalDateTime localTime) {
         this.heading = heading;
         this.lead = lead;
         this.text = text;
         this.localTime = localTime;
+        this.visits = 0;
         this.authorList = new ArrayList();
     }
 
@@ -91,5 +94,9 @@ public class Story extends AbstractPersistable<Long> {
     
     public void setAuthorList(List<Author> authors) {
         this.authorList = authors;
+    }
+
+    public void incrementVisists() {
+        this.visits++;
     }
 }

@@ -19,12 +19,13 @@
         <span>Authors:</span>
         <ul>
             <li th:each="author :${authors}">
-                <span th:text="author">author</span>
+                <span th:text="${author.name}">author</span>
             </li>
         </ul>
         <h3 th:text="${newsStory.lead}">lead</h3>
         <span th:text="${newsStory.text}">story</span><br/>
 
         <a href="/news">Frontpage</a>
+        <a href="/news/all">All news</a>
     </body>
 </html>

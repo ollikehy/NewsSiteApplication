@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 @Controller
 public class NewsController {
@@ -36,19 +39,21 @@ public class NewsController {
 
     @Autowired
     private StoryUtility storyUtility;
-    
+
     @Autowired
     private ValidationUtility validationUtility;
 
     @GetMapping("/news")
-    public String getNews(Model model) {
+    public String getLatestNews(Model model) {
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "localTime");
+        model.addAttribute("news", storyRepository.findAll(pageable));
+
         List<Long> imageIds = new ArrayList();
-        for (Story story : storyRepository.findAll()) {
+        for (Story story : storyRepository.findAll(pageable)) {
             imageIds.add(story.getImage().getId());
         }
-        
+
         model.addAttribute("imageIds", imageIds);
-        model.addAttribute("news", storyRepository.findAll());
         return "news";
     }
 
@@ -74,7 +79,8 @@ public class NewsController {
     @GetMapping("/news/{id}")
     public String getStory(Model model, @PathVariable Long id) {
         Story story = storyRepository.getOne(id);
-
+        story.incrementVisists();
+        storyRepository.save(story);
         model.addAttribute("newsStory", story);
         model.addAttribute("imageId", story.getImage().getId());
         model.addAttribute("authors", story.getAuthorList());
@@ -95,4 +101,16 @@ public class NewsController {
         return new ResponseEntity<>(i.getContent(), headers, HttpStatus.CREATED);
     }
 
+    @GetMapping("/news/all")
+    public String getAllNews(Model model) {
+        
+        List<Long> imageIds = new ArrayList();
+        for (Story story : storyRepository.findAll()) {
+            imageIds.add(story.getImage().getId());
+        }
+
+        model.addAttribute("imageIds", imageIds);
+        model.addAttribute("news", storyRepository.findAll());
+        return "allNews";
+    }
 }

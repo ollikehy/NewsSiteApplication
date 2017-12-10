@@ -13,14 +13,14 @@
         </style>
     </head>
     <body>
-        <h1>Top stories:</h1>
+        <h1>Latest five:</h1>
+        <a href="/news/all">All news</a>
 
         <ul>
             <li th:each="story : ${news}">
-                <h2 th:text="${story.heading}">title</h2>
+                <h2><a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">title</a></h2>
                 <h3 th:text="${story.lead}">lead</h3>
                 <img th:src="@{/news/{id}/content(id=${story.kuvaId})}"/><br/>
-                <a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">story</a>
             </li>
         </ul>
 
