@@ -35,6 +35,8 @@ public class Story extends AbstractPersistable<Long> {
 
     @ManyToMany
     private List<Author> authorList;
+    @ManyToMany
+    private List<Category> categoryList;
     
     private int visits;
     
@@ -45,6 +47,7 @@ public class Story extends AbstractPersistable<Long> {
         this.localTime = localTime;
         this.visits = 0;
         this.authorList = new ArrayList();
+        this.categoryList = new ArrayList();
     }
 
     public String getHeading() {
@@ -94,6 +97,14 @@ public class Story extends AbstractPersistable<Long> {
     
     public void setAuthorList(List<Author> authors) {
         this.authorList = authors;
+    }
+    
+    public List<Category> getCategoryList() {
+        return this.categoryList;
+    }
+    
+    public void setCategoryList(List<Category> categories) {
+        this.categoryList = categories;
     }
 
     public void incrementVisists() {

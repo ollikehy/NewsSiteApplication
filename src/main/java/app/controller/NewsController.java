@@ -60,9 +60,10 @@ public class NewsController {
     @Transactional
     @PostMapping("/news")
     public String create(@RequestParam String heading, @RequestParam String lead, @RequestParam String story,
-            @RequestParam("file") MultipartFile file, @RequestParam String authors, Model model) throws IOException {
+            @RequestParam("file") MultipartFile file, @RequestParam String authors,
+            @RequestParam String categories, Model model) throws IOException {
 
-        List<String> errors = validationUtility.validateInputs(heading, lead, story, file, authors);
+        List<String> errors = validationUtility.validateInputs(heading, lead, story, file, authors, categories);
         if (errors.size() > 0) {
             model.addAttribute("errors", errors);
             return "errors";
@@ -72,7 +73,8 @@ public class NewsController {
 
         storyUtility.setImage(file, newStoryId);
         storyUtility.setAuthors(authors, newStoryId);
-
+        storyUtility.setCategories(categories, newStoryId);
+        
         return "redirect:/news";
     }
 
@@ -103,14 +105,8 @@ public class NewsController {
 
     @GetMapping("/news/all")
     public String getAllNews(Model model) {
-        
-        List<Long> imageIds = new ArrayList();
-        for (Story story : storyRepository.findAll()) {
-            imageIds.add(story.getImage().getId());
-        }
-
-        model.addAttribute("imageIds", imageIds);
-        model.addAttribute("news", storyRepository.findAll());
+        Pageable pageable = PageRequest.of(0, storyRepository.findAll().size(), Sort.Direction.DESC, "localTime");
+        model.addAttribute("news", storyRepository.findAll(pageable));
         return "allNews";
     }
 }

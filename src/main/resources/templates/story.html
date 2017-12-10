@@ -13,6 +13,8 @@
         </style>
     </head>
     <body>
+        <a href="/news">Frontpage</a>
+        <a href="/news/all">All news</a>
         <h1 th:text="${newsStory.heading}">heading</h1><br/>
         <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
         <p th:text="${newsStory.localTime}">release time</p>
@@ -25,7 +27,5 @@
         <h3 th:text="${newsStory.lead}">lead</h3>
         <span th:text="${newsStory.text}">story</span><br/>
 
-        <a href="/news">Frontpage</a>
-        <a href="/news/all">All news</a>
     </body>
 </html>

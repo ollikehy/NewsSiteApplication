@@ -15,18 +15,18 @@ public class ValidationUtility {
     private List<String> errors;
     
     public ValidationUtility() {
-        this.errors = new ArrayList();
     }
     
     public List<String> validateInputs(String heading, String lead, String story, 
-            MultipartFile file, String authors) throws IOException {
-        errors = new ArrayList();
+            MultipartFile file, String authors, String categories) throws IOException {
+        this.errors = new ArrayList();
         validateHeading(heading);
         validateLead(lead);
         validateStory(story);
         validateImage(file);
         validateAuthors(authors);
-        return errors;
+        validateCategories(categories);
+        return this.errors;
     }
 
     private void validateHeading(String heading) {
@@ -67,5 +67,11 @@ public class ValidationUtility {
         if (authors.isEmpty()) {
             errors.add("Add an author");
         } 
+    }
+
+    private void validateCategories(String categories) {
+        if (categories.isEmpty()) {
+            errors.add("Add a category");
+        }
     }
 }

@@ -20,6 +20,7 @@
             <li th:each="story : ${news}">
                 <h2><a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">title</a></h2>
                 <h3 th:text="${story.lead}">lead</h3>
+                <span th:text="${story.localTime}">releaseTime</span><br/>
                 <img th:src="@{/news/{id}/content(id=${story.kuvaId})}"/><br/>
             </li>
         </ul>
@@ -37,6 +38,7 @@
                 Lead: <input type="text" name="lead" id="lead"/><br/>
                 Story: <input type="text" name="story" id ="story"/><br/>
                 Authors: <input type="text" name="authors" id="authors"/><br/>
+                Categories: <input type="text" name="categories" id="categories"/><br/>
                 Image: <input type="file" name="file" id="file"/><br/>
                 <input type="submit" value="Add a news story"/>            
             </form>

@@ -19,8 +19,7 @@
         <ul>
             <li th:each="story : ${news}">
                 <h2><a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">title</a></h2>
-                <h3 th:text="${story.lead}">lead</h3>
-                <img th:src="@{/news/{id}/content(id=${story.kuvaId})}"/><br/>
+                <span th:text="${story.localTime}">releaseTime</span>
             </li>
         </ul><br/>
 
