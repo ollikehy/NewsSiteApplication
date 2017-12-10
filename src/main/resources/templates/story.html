@@ -15,9 +15,10 @@
     <body>
         <h1 th:text="${newsStory.heading}">heading</h1><br/>
         <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
+        <p th:text="${newsStory.localTime}">release time</p>
         <h3 th:text="${newsStory.lead}">lead</h3>
         <span th:text="${newsStory.text}">story</span><br/>
 
-        <a href="/news">Back to news</a>
+        <a href="/news">Frontpage</a>
     </body>
 </html>

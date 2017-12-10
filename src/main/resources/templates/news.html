@@ -17,18 +17,20 @@
 
         <ul>
             <li th:each="story : ${news}">
-                <h1 th:text="${story.heading}">title</h1><br/>
-                <h3 th:text="${story.lead}">lead</h3><br/>
+                <h1 th:text="${story.heading}">title</h1>
+                <h3 th:text="${story.lead}">lead</h3>
+                <img th:src="@{/news/{id}/content(id=${story.kuvaId})}"/><br/>
                 <a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">story</a>
             </li>
         </ul>
 
-        <ul>
+<!--        <ul>
             <li th:each="imageId : ${imageIds}">
                 <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
             </li>
-        </ul>
+        </ul>-->
         <div>
+            <h3>Add a news story</h3>
             Enter information and submit:<br/>
             <form th:action="@{/news}" method="POST" enctype="multipart/form-data">
                 Heading: <input type="text" name="heading" id="heading"/><br/>

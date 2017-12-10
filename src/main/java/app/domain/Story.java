@@ -24,6 +24,7 @@ public class Story extends AbstractPersistable<Long> {
     @OneToOne
     @Lob
     private Image image;
+    private Long kuvaId;
 
     @Size(max = 10000)
     private String text;
@@ -58,6 +59,7 @@ public class Story extends AbstractPersistable<Long> {
 
     public void setImage(Image image) {
         this.image = image;
+        this.kuvaId = image.getId();
     }
 
     public String getText() {
