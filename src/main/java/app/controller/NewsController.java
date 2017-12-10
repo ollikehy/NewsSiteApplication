@@ -1,8 +1,10 @@
 package app.controller;
 
+import app.domain.Category;
 import app.domain.Image;
 import app.repository.StoryRepository;
 import app.domain.Story;
+import app.repository.CategoryRepository;
 import app.repository.ImageRepository;
 import app.utility.DeleteUtility;
 import app.utility.StoryUtility;
@@ -39,6 +41,9 @@ public class NewsController {
     private ImageRepository imageRepository;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private StoryUtility storyUtility;
 
     @Autowired
@@ -57,7 +62,6 @@ public class NewsController {
         for (Story story : storyRepository.findAll(pageable)) {
             imageIds.add(story.getImage().getId());
         }
-
         model.addAttribute("imageIds", imageIds);
         return "news";
     }
@@ -145,8 +149,22 @@ public class NewsController {
     //Returns all news sorted by release date
     @GetMapping("/news/all")
     public String getAllNews(Model model) {
+        if (storyRepository.findAll().size() < 1) {
+            return "redirect:/news";
+        }
         Pageable pageable = PageRequest.of(0, storyRepository.findAll().size(), Sort.Direction.DESC, "localTime");
         model.addAttribute("news", storyRepository.findAll(pageable));
         return "allNews";
+    }
+
+    //Returns top five news sorted by amount of views
+    @GetMapping("/news/trending")
+    public String getTrending(Model model) {
+        if (storyRepository.findAll().size() < 1) {
+            return "redirect:/news";
+        }
+        Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "visits");
+        model.addAttribute("news", storyRepository.findAll(pageable));
+        return "trending";
     }
 }

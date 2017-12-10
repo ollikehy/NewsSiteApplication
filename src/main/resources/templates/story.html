@@ -7,14 +7,38 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
 
         <style>
+            div {
+                margin-left: 20px
+            }
             ul {
-                list-style-type: none   
+                list-style-type: none;
+            }
+            input {
+                position: absolute;
+                left: 110px;
+            }
+            #button {
+                position: absolute;
+                left: 50px;
+                padding-left: 20px;
+                padding-right: 20px;
+                margin-top: 15px;
+                margin-bottom:30px;
+            }
+            nav {
+                margin-left: 20px;
+                margin-top: 20px;
             }
         </style>
     </head>
     <body>
-        <a href="/news">Frontpage</a>
-        <a href="/news/all">All news</a>
+        <nav>
+            <a th:href="@{/news}">Home</a>
+            <a th:href="@{/news/all}">All News</a>
+            <a th:href="@{/news/categories}">Categories</a>
+            <a th:href="@{/news/trending}">Trending</a>
+        </nav>
+
         <h1 th:text="${newsStory.heading}">heading</h1><br/>
         <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
         <p th:text="${newsStory.localTime}">release time</p>
