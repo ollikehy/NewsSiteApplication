@@ -4,6 +4,7 @@ import app.domain.Image;
 import app.repository.StoryRepository;
 import app.domain.Story;
 import app.repository.ImageRepository;
+import app.utility.DeleteUtility;
 import app.utility.StoryUtility;
 import app.utility.ValidationUtility;
 import java.io.IOException;
@@ -43,6 +44,10 @@ public class NewsController {
     @Autowired
     private ValidationUtility validationUtility;
 
+    @Autowired
+    private DeleteUtility deleteUtility;
+
+    //Frontpage, shows latest 5 news
     @GetMapping("/news")
     public String getLatestNews(Model model) {
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "localTime");
@@ -57,6 +62,7 @@ public class NewsController {
         return "news";
     }
 
+    //Creates a new news story
     @Transactional
     @PostMapping("/news")
     public String create(@RequestParam String heading, @RequestParam String lead, @RequestParam String story,
@@ -74,10 +80,11 @@ public class NewsController {
         storyUtility.setImage(file, newStoryId);
         storyUtility.setAuthors(authors, newStoryId);
         storyUtility.setCategories(categories, newStoryId);
-        
+
         return "redirect:/news";
     }
 
+    //Returns a specific news story
     @GetMapping("/news/{id}")
     public String getStory(Model model, @PathVariable Long id) {
         Story story = storyRepository.getOne(id);
@@ -90,6 +97,38 @@ public class NewsController {
         return "story";
     }
 
+    //Returns a page where you can edit chosen news story
+    @GetMapping("/news/{id}/edit")
+    public String editStory(Model model, @PathVariable Long id) {
+        Story story = storyRepository.getOne(id);
+
+        model.addAttribute("newsStory", new Story(story.getHeading(), story.getLead(), story.getText(), story.getLocalTime()));
+        model.addAttribute("storyId", id);
+        return "edit";
+    }
+
+    @Transactional
+    @PostMapping("/news/{id}/edit")
+    public String editNewsStory(@PathVariable Long id, @RequestParam String heading,
+            @RequestParam String lead, @RequestParam String story,
+            @RequestParam("file") MultipartFile file, @RequestParam String authors,
+            @RequestParam String categories, Model model) throws IOException {
+
+        List<String> errors = validationUtility.validateInputs(heading, lead, story, file, authors, categories);
+        if (errors.size() > 0) {
+            model.addAttribute("errors", errors);
+            return "errors";
+        }
+
+        storyUtility.editStory(id, heading, lead, story);
+        storyUtility.setImage(file, id);
+        storyUtility.setAuthors(authors, id);
+        storyUtility.setCategories(categories, id);
+
+        return "redirect:/news";
+    }
+
+    //Produces the image for the news stories
     @GetMapping(path = "/news/{id}/content", produces = "image/png")
     @ResponseBody
     @Transactional
@@ -103,6 +142,7 @@ public class NewsController {
         return new ResponseEntity<>(i.getContent(), headers, HttpStatus.CREATED);
     }
 
+    //Returns all news sorted by release date
     @GetMapping("/news/all")
     public String getAllNews(Model model) {
         Pageable pageable = PageRequest.of(0, storyRepository.findAll().size(), Sort.Direction.DESC, "localTime");

@@ -80,10 +80,10 @@ public class StoryUtility {
     public void setCategories(String categories, Long newStoryId) {
         Story story = storyRepository.getOne(newStoryId);
         String[] categoryArray = categories.split(", ");
-        
+
         for (String category : categoryArray) {
             Category exists = categoryRepository.findByName(category);
-            
+
             if (exists != null) {
                 List<Story> storyList = exists.getStoryList();
                 storyList.add(story);
@@ -96,10 +96,24 @@ public class StoryUtility {
                 storyList.add(story);
                 newCategory.setStoryList(storyList);
                 categoryRepository.save(newCategory);
-                
+
                 story.getCategoryList().add(newCategory);
                 storyRepository.save(story);
             }
         }
+    }
+
+    @Transactional
+    public void editStory(Long id, String heading, String lead, String text
+    ) throws IOException {
+        Story edittedStory = storyRepository.getOne(id);
+
+        edittedStory.setHeading(heading);
+        edittedStory.setLead(lead);
+        edittedStory.setText(text);
+
+        edittedStory.getCategoryList().clear();
+        edittedStory.getAuthorList().clear();
+        storyRepository.save(edittedStory);
     }
 }

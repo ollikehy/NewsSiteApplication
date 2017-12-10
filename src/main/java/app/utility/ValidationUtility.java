@@ -1,4 +1,3 @@
-
 package app.utility;
 
 import java.io.IOException;
@@ -11,18 +10,18 @@ import org.springframework.web.multipart.MultipartFile;
 @Transactional
 @Service
 public class ValidationUtility {
-    
+
     private List<String> errors;
-    
+
     public ValidationUtility() {
     }
-    
-    public List<String> validateInputs(String heading, String lead, String story, 
+
+    public List<String> validateInputs(String heading, String lead, String text,
             MultipartFile file, String authors, String categories) throws IOException {
         this.errors = new ArrayList();
         validateHeading(heading);
         validateLead(lead);
-        validateStory(story);
+        validateText(text);
         validateImage(file);
         validateAuthors(authors);
         validateCategories(categories);
@@ -45,10 +44,10 @@ public class ValidationUtility {
         }
     }
 
-    private void validateStory(String story) {
-        if (story.isEmpty()) {
+    private void validateText(String text) {
+        if (text.isEmpty()) {
             errors.add("No story");
-        } else if (story.length() > 10000) {
+        } else if (text.length() > 10000) {
             errors.add("Story is too long, maximum length 10000 symbols");
         }
     }
@@ -66,7 +65,7 @@ public class ValidationUtility {
     private void validateAuthors(String authors) {
         if (authors.isEmpty()) {
             errors.add("Add an author");
-        } 
+        }
     }
 
     private void validateCategories(String categories) {
@@ -74,4 +73,5 @@ public class ValidationUtility {
             errors.add("Add a category");
         }
     }
+
 }

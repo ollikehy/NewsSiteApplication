@@ -27,5 +27,6 @@
         <h3 th:text="${newsStory.lead}">lead</h3>
         <span th:text="${newsStory.text}">story</span><br/>
 
+        <a th:href="@{/news/{id}/edit(id=${newsStory.id})}">Edit</a>
     </body>
 </html>
