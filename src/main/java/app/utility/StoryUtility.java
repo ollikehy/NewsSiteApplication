@@ -30,6 +30,7 @@ public class StoryUtility {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    //Sets the image on a news story
     @Transactional
     public void setImage(MultipartFile file, Long id) throws IOException {
         Image image = new Image(LocalDateTime.now());
@@ -51,6 +52,7 @@ public class StoryUtility {
         storyRepository.getOne(id).setImage(image);
     }
 
+    //Sets the authors for a news story
     @Transactional
     public void setAuthors(String authors, Long newStoryId) {
         Story story = storyRepository.getOne(newStoryId);
@@ -77,6 +79,7 @@ public class StoryUtility {
         }
     }
 
+    //Sets the categories for a news story
     @Transactional
     public void setCategories(String categories, Long newStoryId) {
         Story story = storyRepository.getOne(newStoryId);
@@ -104,6 +107,7 @@ public class StoryUtility {
         }
     }
 
+    //Edits the story based on what params are not null
     @Transactional
     public void editStory(Long id, String heading, String lead, String text
     ) throws IOException {
@@ -122,6 +126,7 @@ public class StoryUtility {
         storyRepository.save(edittedStory);
     }
 
+    //Returns a list of news stories with chosen category
     public List<Story> getNewsByCategory(String categoryName) {
         List<Story> stories = new ArrayList();
         for (Story story : storyRepository.findAll()) {

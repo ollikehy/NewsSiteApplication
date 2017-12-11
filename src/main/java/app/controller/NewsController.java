@@ -1,6 +1,5 @@
 package app.controller;
 
-import app.domain.Category;
 import app.domain.Image;
 import app.repository.StoryRepository;
 import app.domain.Story;
@@ -111,6 +110,7 @@ public class NewsController {
         return "edit";
     }
 
+    //Edits a single piece of news, only params that that are not null are edited
     @Transactional
     @PostMapping("/news/{id}/edit")
     public String editNewsStory(@PathVariable Long id, @RequestParam String heading,
@@ -171,23 +171,19 @@ public class NewsController {
     //Returns top five news sorted by amount of views
     @GetMapping("/news/trending")
     public String getTrending(Model model) {
-        if (storyRepository.findAll().size() < 1) {
-            return "redirect:/news";
-        }
         Pageable pageable = PageRequest.of(0, 5, Sort.Direction.DESC, "visits");
         model.addAttribute("news", storyRepository.findAll(pageable));
         return "trending";
     }
 
+    //Returns a page with a list of all categories
     @GetMapping("/news/categories")
     public String getCategories(Model model) {
-        if (categoryRepository.findAll().size() < 1) {
-            return "redirect:/news";
-        }
         model.addAttribute("categories", categoryRepository.findAll());
         return "categories";
     }
 
+    //Returns a single category
     @GetMapping("/news/categories/{id}")
     public String getCategory(Model model, @PathVariable Long id) {
         String categoryName = categoryRepository.getOne(id).getName();

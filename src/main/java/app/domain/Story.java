@@ -107,6 +107,7 @@ public class Story extends AbstractPersistable<Long> {
         this.categoryList = categories;
     }
 
+    //Every time a news page is loaded, visits are incremented by one
     public void incrementVisists() {
         this.visits++;
     }
