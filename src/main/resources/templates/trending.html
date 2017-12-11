@@ -28,6 +28,10 @@
                 margin-left: 20px;
                 margin-top: 20px;
             }
+            img {
+                max-height: 150px;
+                max-width: 200px;
+            }
         </style>
     </head>
     <body>
@@ -45,10 +49,10 @@
             <br/><ul>
                 <li th:each="story : ${news}">
                     <h2><a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">title</a></h2>
-                    
+
                     <h3 th:text="${story.lead}">lead</h3>
                     <span th:inline="text">Date published:
-                    <span th:text="${story.localTime}">releaseTime</span><br/>
+                        <span th:text="${story.localTime}">releaseTime</span><br/>
                     </span>
                     <span th:inline="text">Views:
                         <span th:text="${story.visits}">visits</span><br/>
