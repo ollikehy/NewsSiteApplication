@@ -118,17 +118,28 @@ public class NewsController {
             @RequestParam("file") MultipartFile file, @RequestParam String authors,
             @RequestParam String categories, Model model) throws IOException {
 
-        List<String> errors = validationUtility.validateInputs(heading, lead, story, file, authors, categories);
+        List<String> errors = validationUtility.validateEdit(heading, lead, story, file, authors, categories);
         if (errors.size() > 0) {
             model.addAttribute("errors", errors);
             return "errors";
         }
 
         storyUtility.editStory(id, heading, lead, story);
-        storyUtility.setImage(file, id);
-        storyUtility.setAuthors(authors, id);
-        storyUtility.setCategories(categories, id);
-
+        if (!file.isEmpty()) {
+            storyUtility.setImage(file, id);
+        }
+        if (!authors.isEmpty()) {
+            Story editted = storyRepository.getOne(id);
+            editted.getAuthorList().clear();
+            storyRepository.save(editted);
+            storyUtility.setAuthors(authors, id);
+        }
+        if (!categories.isEmpty()) {
+            Story editted = storyRepository.getOne(id);
+            editted.getCategoryList().clear();
+            storyRepository.save(editted);
+            storyUtility.setCategories(categories, id);
+        }
         return "redirect:/news";
     }
 
@@ -167,7 +178,7 @@ public class NewsController {
         model.addAttribute("news", storyRepository.findAll(pageable));
         return "trending";
     }
-    
+
     @GetMapping("/news/categories")
     public String getCategories(Model model) {
         if (categoryRepository.findAll().size() < 1) {
@@ -176,7 +187,7 @@ public class NewsController {
         model.addAttribute("categories", categoryRepository.findAll());
         return "categories";
     }
-    
+
     @GetMapping("/news/categories/{id}")
     public String getCategory(Model model, @PathVariable Long id) {
         String categoryName = categoryRepository.getOne(id).getName();

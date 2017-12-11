@@ -1,4 +1,3 @@
-
 package app.utility;
 
 import app.domain.Author;
@@ -16,7 +15,7 @@ import org.springframework.stereotype.Service;
 @Transactional
 @Service
 public class DeleteUtility {
-    
+
     @Autowired
     private StoryRepository storyRepository;
     @Autowired
@@ -33,11 +32,15 @@ public class DeleteUtility {
             for (Story story : author.getStoryList()) {
                 if (story.getHeading().equals(storyHeading)) {
                     author.getStoryList().remove(story);
+                    if (author.getStoryList().size() < 1) {
+                        authorRepository.deleteById(author.getId());
+                    }
+
                 }
             }
         }
     }
-    
+
     @Transactional
     public void deleteCategories(String storyHeading) {
         List<Category> categories = categoryRepository.findAll();
@@ -45,6 +48,9 @@ public class DeleteUtility {
             for (Story story : category.getStoryList()) {
                 if (story.getHeading().equals(storyHeading)) {
                     category.getStoryList().remove(story);
+                    if (category.getStoryList().size() < 1) {
+                        categoryRepository.deleteById(category.getId());
+                    }
                 }
             }
         }

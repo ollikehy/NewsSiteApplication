@@ -109,12 +109,16 @@ public class StoryUtility {
     ) throws IOException {
         Story edittedStory = storyRepository.getOne(id);
 
-        edittedStory.setHeading(heading);
-        edittedStory.setLead(lead);
-        edittedStory.setText(text);
+        if (!heading.isEmpty()) {
+            edittedStory.setHeading(heading);
+        }
+        if (!lead.isEmpty()) {
+            edittedStory.setLead(lead);
+        }
+        if (!text.isEmpty()) {
+            edittedStory.setText(text);
+        }
 
-        edittedStory.getCategoryList().clear();
-        edittedStory.getAuthorList().clear();
         storyRepository.save(edittedStory);
     }
 
@@ -127,7 +131,7 @@ public class StoryUtility {
                 }
             }
         }
-        
+
         return stories;
     }
 }

@@ -27,6 +27,30 @@ public class ValidationUtility {
         validateCategories(categories);
         return this.errors;
     }
+    
+    public List<String> validateEdit(String heading, String lead, String story,
+            MultipartFile file, String authors, String categories) throws IOException {
+        this.errors = new ArrayList();
+        if (!heading.isEmpty()) {
+            validateHeading(heading);
+        }
+        if (!lead.isEmpty()) {
+            validateLead(lead);
+        }
+        if (!story.isEmpty()) {
+            validateText(story);
+        }
+        if (!file.isEmpty()) {
+            validateImage(file);
+        }
+        if (!authors.isEmpty()) {
+            validateAuthors(authors);
+        }
+        if (!categories.isEmpty()) {
+            validateCategories(categories);
+        }
+        return errors;
+    }
 
     private void validateHeading(String heading) {
         if (heading.isEmpty()) {
@@ -73,5 +97,4 @@ public class ValidationUtility {
             errors.add("Add a category");
         }
     }
-
 }

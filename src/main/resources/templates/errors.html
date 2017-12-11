@@ -27,6 +27,9 @@
                 margin-left: 20px;
                 margin-top: 20px;
             }
+            #return {
+                margin-left: 20px;
+            }
         </style>
 
     </head>
@@ -43,6 +46,6 @@
                 <p th:text="${error}">error</p>
             </li>
         </ul>
-        <a th:href="/news">Frontpage</a>
+        <a id="return" th:href="@{/news}">Return</a>
     </body>
 </html>

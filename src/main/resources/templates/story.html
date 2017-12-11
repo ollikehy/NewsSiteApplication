@@ -38,19 +38,22 @@
             <a th:href="@{/news/categories}">Categories</a>
             <a th:href="@{/news/trending}">Trending</a>
         </nav>
+        <div>
+            <h1 th:text="${newsStory.heading}">heading</h1><br/>
+            <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
+            <p th:inline="text">Publish date:
+                <span th:text="${newsStory.localTime}">release time</span>
+            </p>
+            <span>Authors:</span>
+            <ul>
+                <li th:each="author :${authors}">
+                    <span th:text="${author.name}">author</span>
+                </li>
+            </ul>
+            <h3 th:text="${newsStory.lead}">lead</h3>
+            <span th:text="${newsStory.text}">story</span><br/>
 
-        <h1 th:text="${newsStory.heading}">heading</h1><br/>
-        <img th:src="@{/news/{id}/content(id=${imageId})}"/><br/>
-        <p th:text="${newsStory.localTime}">release time</p>
-        <span>Authors:</span>
-        <ul>
-            <li th:each="author :${authors}">
-                <span th:text="${author.name}">author</span>
-            </li>
-        </ul>
-        <h3 th:text="${newsStory.lead}">lead</h3>
-        <span th:text="${newsStory.text}">story</span><br/>
-
-        <a th:href="@{/news/{id}/edit(id=${newsStory.id})}">Edit</a>
+            <br/><a th:href="@{/news/{id}/edit(id=${newsStory.id})}">Edit</a>
+        </div>
     </body>
 </html>
