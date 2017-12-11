@@ -7,8 +7,11 @@ Note: WIP
 
 [Heroku link](https://newssiteapplication.herokuapp.com/)
 
-[Features that might be added in the future](https://github.com/ollikehy/NewsSiteApplication/blob/master/FMAITF.md)
-
-[Typical user stories for the site](https://github.com/ollikehy/NewsSiteApplication/blob/master/TUS.md)
-
 [![Build Status](https://travis-ci.org/ollikehy/NewsSiteApplication.svg?branch=master)](https://travis-ci.org/ollikehy/NewsSiteApplication)
+
+Installation: 
+```sh
+git clone git@github.com:ollikehy/NewsSiteApplication.git
+cd NewsSiteAplication
+mvn spring-boot:run
+```
