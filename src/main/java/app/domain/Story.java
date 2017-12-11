@@ -17,6 +17,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+//The class and its methods are self-explanatory
 public class Story extends AbstractPersistable<Long> {
 
     @Size(max = 1000)

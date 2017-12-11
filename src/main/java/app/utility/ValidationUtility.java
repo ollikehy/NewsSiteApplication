@@ -12,10 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 public class ValidationUtility {
 
     private List<String> errors;
-
-    public ValidationUtility() {
-    }
-
+    
+    //Validates the inputes when creating a new news story
     public List<String> validateInputs(String heading, String lead, String text,
             MultipartFile file, String authors, String categories) throws IOException {
         this.errors = new ArrayList();
@@ -28,6 +26,8 @@ public class ValidationUtility {
         return this.errors;
     }
     
+    //Validates inputes when editing news story, if params are null then they..
+    //are ignored and instead the existing values are used.
     public List<String> validateEdit(String heading, String lead, String story,
             MultipartFile file, String authors, String categories) throws IOException {
         this.errors = new ArrayList();

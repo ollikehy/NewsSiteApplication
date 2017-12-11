@@ -25,6 +25,7 @@ public class DeleteUtility {
     @Autowired
     private CategoryRepository categoryRepository;
 
+    //Deletes authors from a news story
     @Transactional
     public void deleteAuthors(String storyHeading) {
         List<Author> authors = authorRepository.findAll();
@@ -41,6 +42,7 @@ public class DeleteUtility {
         }
     }
 
+    //Deletes categories from a news story
     @Transactional
     public void deleteCategories(String storyHeading) {
         List<Category> categories = categoryRepository.findAll();

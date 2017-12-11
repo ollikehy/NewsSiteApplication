@@ -18,6 +18,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//The class and its methods are self-explanatory
 public class Image extends AbstractPersistable<Long> {
 
     @OneToOne

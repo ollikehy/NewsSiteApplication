@@ -14,6 +14,7 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+//The class and its methods are self-explanatory
 public class Author extends AbstractPersistable<Long>{
     
     private String name;

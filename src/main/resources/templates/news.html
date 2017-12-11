@@ -42,7 +42,7 @@
             <h1>Latest five:</h1>
         </div>
         <div>
-            <br/><ul>
+            <ul>
                 <li th:each="story : ${news}">
                     <h2><a th:href="@{/news/{id}(id=${story.id})}" th:text="${story.heading}">title</a></h2>
                     <h3 th:text="${story.lead}">lead</h3>

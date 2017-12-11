@@ -64,7 +64,7 @@ public class NewsController {
         model.addAttribute("imageIds", imageIds);
         return "news";
     }
-
+    
     //Creates a new news story
     @Transactional
     @PostMapping("/news")
