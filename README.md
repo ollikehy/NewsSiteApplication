@@ -7,6 +7,8 @@ Note: WIP
 
 [Heroku link](https://newssiteapplication.herokuapp.com/)
 
+[Documentation](https://github.com/ollikehy/NewsSiteApplication/blob/master/documentation.md)
+
 [![Build Status](https://travis-ci.org/ollikehy/NewsSiteApplication.svg?branch=master)](https://travis-ci.org/ollikehy/NewsSiteApplication)
 
 Installation: 
