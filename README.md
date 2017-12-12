@@ -1,5 +1,5 @@
 ### NOTE, IMPORTANT: 
-Apparently I didn't manage to configure the Postgres so unfortunately no template news available on the Heroku-site.
+Apparently I didn't manage to configure the Postgres so unfortunately no template news available on the Heroku-site. I will try to configure it before peer reviews so that the review process will be easier.
 
 #### News Site Application
 This is a quick news site application created for the Web Application Development- course which is a part of my CS-studies at the University of Helsinki.
