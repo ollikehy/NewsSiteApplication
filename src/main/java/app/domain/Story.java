@@ -28,6 +28,7 @@ public class Story extends AbstractPersistable<Long> {
     @OneToOne
     @Lob
     private Image image;
+    
     private Long kuvaId;
 
     @Size(max = 10000)

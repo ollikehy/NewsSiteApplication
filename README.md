@@ -1,5 +1,7 @@
 ### NOTE, IMPORTANT: 
-Heroku now works with PostgreSQL, but viewing a single story doesn't work
+I tried to configure PostgreSQL for Heroku so that my example news would not be deleted and would stay up on the site, but unfortunately it didn't work on a single story view so I figured it would be better that the whole site worked, but without example stories.
+-Olli (13:30, 12.12.2017)
+
 
 #### News Site Application
 This is a quick news site application created for the Web Application Development- course which is a part of my CS-studies at the University of Helsinki.
